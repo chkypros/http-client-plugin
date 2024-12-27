@@ -9,27 +9,28 @@ import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBPanel
 import com.intellij.ui.content.ContentFactory
 import com.github.chkypros.httpclientplugin.MessageBundle
-import com.github.chkypros.httpclientplugin.services.MyProjectService
+import com.github.chkypros.httpclientplugin.services.HttpClientService
+import com.intellij.openapi.project.DumbAware
 import javax.swing.JButton
 
 
-class MyToolWindowFactory : ToolWindowFactory {
+class HttpClientToolWindowFactory : ToolWindowFactory {
 
     init {
         thisLogger().warn("Don't forget to remove all non-needed sample code files with their corresponding registration entries in `plugin.xml`.")
     }
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
-        val myToolWindow = MyToolWindow(toolWindow)
-        val content = ContentFactory.getInstance().createContent(myToolWindow.getContent(), null, false)
+        val httpClientToolWindow = HttpClientToolWindow(toolWindow)
+        val content = ContentFactory.getInstance().createContent(httpClientToolWindow.getContent(), null, false)
         toolWindow.contentManager.addContent(content)
     }
 
     override fun shouldBeAvailable(project: Project) = true
 
-    class MyToolWindow(toolWindow: ToolWindow) {
+    class HttpClientToolWindow(toolWindow: ToolWindow) : DumbAware {
 
-        private val service = toolWindow.project.service<MyProjectService>()
+        private val service = toolWindow.project.service<HttpClientService>()
 
         fun getContent() = JBPanel<JBPanel<*>>().apply {
             val label = JBLabel(MessageBundle.message("randomLabel", "?"))

@@ -1,15 +1,15 @@
 package com.github.chkypros.httpclientplugin
 
-import com.github.chkypros.httpclientplugin.services.MyProjectService
+import com.github.chkypros.httpclientplugin.services.HttpClientService
 import com.intellij.openapi.components.service
 import com.intellij.testFramework.TestDataPath
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
 @TestDataPath("\$CONTENT_ROOT/src/test/testData")
-class MyPluginTest : BasePlatformTestCase() {
+class HttpClientPluginTest : BasePlatformTestCase() {
 
     fun testProjectService() {
-        val projectService = project.service<MyProjectService>()
+        val projectService = project.service<HttpClientService>()
 
         assertNotSame(projectService.getRandomNumber(), projectService.getRandomNumber())
     }

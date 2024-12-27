@@ -6,7 +6,7 @@ import com.intellij.openapi.project.Project
 import com.github.chkypros.httpclientplugin.MessageBundle
 
 @Service(Service.Level.PROJECT)
-class MyProjectService(project: Project) {
+class HttpClientService(project: Project) {
 
     init {
         thisLogger().info(MessageBundle.message("projectService", project.name))

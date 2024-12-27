@@ -9,8 +9,8 @@
     <resource-bundle>messages.MessageBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.chkypros.httpclientplugin.toolWindow.MyToolWindowFactory"
-                    id="MyToolWindow"
+        <toolWindow factoryClass="com.github.chkypros.httpclientplugin.toolWindow.HttpClientToolWindowFactory"
+                    id="Http Client"
                     anchor="bottom"/>
     </extensions>
 
