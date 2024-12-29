@@ -1,17 +1,17 @@
 package com.github.chkypros.httpclientplugin.toolWindow
 
+import com.github.chkypros.httpclientplugin.services.HttpClientService
 import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.thisLogger
+import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
-import com.intellij.ui.components.JBLabel
-import com.intellij.ui.components.JBPanel
 import com.intellij.ui.content.ContentFactory
-import com.github.chkypros.httpclientplugin.MessageBundle
-import com.github.chkypros.httpclientplugin.services.HttpClientService
-import com.intellij.openapi.project.DumbAware
-import javax.swing.JButton
+import com.intellij.ui.dsl.builder.Align
+import com.intellij.ui.dsl.builder.panel
+import java.util.*
+import javax.swing.JSeparator
 
 
 class HttpClientToolWindowFactory : ToolWindowFactory {
@@ -32,15 +32,27 @@ class HttpClientToolWindowFactory : ToolWindowFactory {
 
         private val service = toolWindow.project.service<HttpClientService>()
 
-        fun getContent() = JBPanel<JBPanel<*>>().apply {
-            val label = JBLabel(MessageBundle.message("randomLabel", "?"))
+        fun getContent() = panel {
+            align(Align.FILL)
+            row {
+                panel {
+                    align(Align.FILL)
+                    row {
+                        button("SEND") {
+                            // TODO Implement HTTP request invocation
+                        }
 
-            add(label)
-            add(JButton(MessageBundle.message("shuffle")).apply {
-                addActionListener {
-                    label.text = MessageBundle.message("randomLabel", service.getRandomNumber())
+                        comboBox(getHttpVerbs())
+
+                        expandableTextField().component.emptyText.text = "URL"
+                    }
+
                 }
-            })
+                cell(JSeparator())
+                text("2")
+            }
         }
+
+        private fun getHttpVerbs(): List<String> = Arrays.asList("GET", "POST")
     }
 }
