@@ -8,10 +8,8 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.content.ContentFactory
-import com.intellij.ui.dsl.builder.Align
+import com.intellij.ui.dsl.builder.AlignX
 import com.intellij.ui.dsl.builder.panel
-import java.util.*
-import javax.swing.JSeparator
 
 
 class HttpClientToolWindowFactory : ToolWindowFactory {
@@ -33,26 +31,21 @@ class HttpClientToolWindowFactory : ToolWindowFactory {
         private val service = toolWindow.project.service<HttpClientService>()
 
         fun getContent() = panel {
-            align(Align.FILL)
             row {
-                panel {
-                    align(Align.FILL)
-                    row {
-                        button("SEND") {
-                            // TODO Implement HTTP request invocation
-                        }
-
-                        comboBox(getHttpVerbs())
-
-                        expandableTextField().component.emptyText.text = "URL"
-                    }
-
+                button("SEND") {
+                    // TODO Implement HTTP request invocation
+                    val randomNumber = service.getRandomNumber()
+                    thisLogger().info("Sending random number $randomNumber")
                 }
-                cell(JSeparator())
-                text("2")
+
+                comboBox(getHttpVerbs())
+
+                expandableTextField()
+                    .align(AlignX.FILL)
+                    .component.emptyText.text = "URL"
             }
         }
 
-        private fun getHttpVerbs(): List<String> = Arrays.asList("GET", "POST")
+        private fun getHttpVerbs() = listOf("GET", "POST")
     }
 }
