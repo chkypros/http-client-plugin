@@ -14,4 +14,8 @@ class HttpClientService(project: Project) {
     }
 
     fun getRandomNumber() = (1..100).random()
+
+    fun sendRequest(httpVerb: String, url: String): String {
+        return "${httpVerb} ${url}"
+    }
 }
