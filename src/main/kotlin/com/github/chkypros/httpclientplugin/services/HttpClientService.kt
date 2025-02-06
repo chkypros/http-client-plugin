@@ -4,18 +4,27 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
 import com.github.chkypros.httpclientplugin.MessageBundle
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 
 @Service(Service.Level.PROJECT)
 class HttpClientService(project: Project) {
+    val httpClient = HttpClient.newHttpClient()
 
     init {
         thisLogger().info(MessageBundle.message("projectService", project.name))
-        thisLogger().warn("Don't forget to remove all non-needed sample code files with their corresponding registration entries in `plugin.xml`.")
     }
 
     fun getRandomNumber() = (1..100).random()
 
-    fun sendRequest(httpVerb: String, url: String): String {
-        return "${httpVerb} ${url}"
+    fun sendRequest(httpVerb: String, uri: String): String {
+        val request = HttpRequest.newBuilder(URI.create(uri))
+            .method(httpVerb, HttpRequest.BodyPublishers.noBody())
+            .build()
+
+        val response = httpClient.send(request, HttpResponse.BodyHandlers.ofString())
+        return response.body()
     }
 }
