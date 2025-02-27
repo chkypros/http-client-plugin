@@ -21,6 +21,7 @@ class HttpClientToolWindow(toolWindow: ToolWindow) : DumbAware {
 
         panel = panel {
             commandRow { panel }
+            requestResponseRow()
         }
 
         return panel
@@ -34,7 +35,7 @@ class HttpClientToolWindow(toolWindow: ToolWindow) : DumbAware {
                 model.responseBody = service.sendRequest(model.httpVerb, model.url)
                 thisLogger().info("Got response: [${model.responseBody}]")
 
-                panel().apply()
+                panel().reset()
             }
 
             comboBox(getHttpVerbs())
@@ -44,6 +45,17 @@ class HttpClientToolWindow(toolWindow: ToolWindow) : DumbAware {
                 .align(AlignX.FILL)
                 .bindText(model::url)
                 .component.emptyText.text = "URL"
+        }
+    }
+
+    private fun Panel.requestResponseRow() {
+        row {
+            textArea()
+                .label("Response", LabelPosition.TOP)
+                .rows(5)
+                .align(AlignX.FILL)
+                .bindText(model::responseBody.toMutableProperty())
+                .component.isEditable = false
         }
     }
 
