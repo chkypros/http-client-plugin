@@ -52,7 +52,10 @@ class HttpClientToolWindow(toolWindow: ToolWindow) : DumbAware {
     private fun Panel.requestGroup() {
         collapsibleGroup("Request") {
             row {
-
+                textArea()
+                    .rows(5)
+                    .align(AlignX.FILL)
+                    .bindText(model::requestBody.toMutableProperty())
             }
         }.expanded = true
     }
@@ -75,6 +78,7 @@ class HttpClientToolWindow(toolWindow: ToolWindow) : DumbAware {
     internal data class Model (
         var httpVerb: String = "GET",
         var url: String = "",
+        var requestBody: String = "",
         var responseBody: String = ""
     )
 }
