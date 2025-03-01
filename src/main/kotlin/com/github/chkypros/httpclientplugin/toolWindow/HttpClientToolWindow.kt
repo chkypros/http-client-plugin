@@ -21,7 +21,8 @@ class HttpClientToolWindow(toolWindow: ToolWindow) : DumbAware {
 
         panel = panel {
             commandRow { panel }
-            requestResponseRow()
+            requestGroup()
+            responseGroup()
         }
 
         return panel
@@ -48,14 +49,23 @@ class HttpClientToolWindow(toolWindow: ToolWindow) : DumbAware {
         }
     }
 
-    private fun Panel.requestResponseRow() {
-        row {
-            textArea()
-                .label("Response", LabelPosition.TOP)
-                .rows(5)
-                .align(AlignX.FILL)
-                .bindText(model::responseBody.toMutableProperty())
-                .component.isEditable = false
+    private fun Panel.requestGroup() {
+        collapsibleGroup("Request") {
+            row {
+
+            }
+        }.expanded = true
+    }
+
+    private fun Panel.responseGroup() {
+        collapsibleGroup("Response") {
+            row {
+                textArea()
+                    .rows(5)
+                    .align(AlignX.FILL)
+                    .bindText(model::responseBody.toMutableProperty())
+                    .component.isEditable = false
+            }
         }
     }
 
