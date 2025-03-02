@@ -10,8 +10,7 @@ class HttpClientPluginTest : BasePlatformTestCase() {
 
     fun testProjectService() {
         val projectService = project.service<HttpClientService>()
-
-        assertNotSame(projectService.getRandomNumber(), projectService.getRandomNumber())
+        assertNotNull(projectService)
     }
 
     override fun getTestDataPath() = "src/test/testData"

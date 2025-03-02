@@ -17,8 +17,6 @@ class HttpClientService(project: Project) {
         thisLogger().info(MessageBundle.message("projectService", project.name))
     }
 
-    fun getRandomNumber() = (1..100).random()
-
     fun sendRequest(httpVerb: String, uri: String): String {
         return sendRequest(httpVerb, uri, HttpRequest.BodyPublishers.noBody())
     }
