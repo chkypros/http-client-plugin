@@ -20,8 +20,16 @@ class HttpClientService(project: Project) {
     fun getRandomNumber() = (1..100).random()
 
     fun sendRequest(httpVerb: String, uri: String): String {
+        return sendRequest(httpVerb, uri, HttpRequest.BodyPublishers.noBody())
+    }
+
+    fun sendRequest(httpVerb: String, uri: String, body: String): String {
+        return sendRequest(httpVerb, uri, HttpRequest.BodyPublishers.ofString(body))
+    }
+
+    private fun sendRequest(httpVerb: String, uri: String, bodyPublisher: HttpRequest.BodyPublisher): String {
         val request = HttpRequest.newBuilder(URI.create(uri))
-            .method(httpVerb, HttpRequest.BodyPublishers.noBody())
+            .method(httpVerb, bodyPublisher)
             .build()
 
         val response = httpClient.send(request, HttpResponse.BodyHandlers.ofString())

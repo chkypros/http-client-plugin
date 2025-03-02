@@ -33,7 +33,7 @@ class HttpClientToolWindow(toolWindow: ToolWindow) : DumbAware {
             button("SEND") {
                 panel().apply()
 
-                model.responseBody = service.sendRequest(model.httpVerb, model.url)
+                model.responseBody = service.sendRequest(model.httpVerb, model.url, model.requestBody)
                 thisLogger().info("Got response: [${model.responseBody}]")
 
                 panel().reset()
